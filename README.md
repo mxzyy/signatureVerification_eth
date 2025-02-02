@@ -15,3 +15,8 @@ Sauce :
 * [Ethers.js](https://docs.ethers.org/v6)
 * [Hardhat.js](https://hardhat.org/docs)
 * [Chai.js](https://www.chaijs.com/api/assert/)
+
+
+TODO : 
+- Web Design
+- Connect MetaMask
