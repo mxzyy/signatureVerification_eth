@@ -20,3 +20,4 @@ Sauce :
 TODO : 
 - Web Design
 - Connect MetaMask
+- Deploy DevNet
