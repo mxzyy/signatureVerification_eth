@@ -1,5 +1,5 @@
-import ABI from "./SignatureVerification.json";
-import { BrowserProvider, Contract, parseEther, formatEther } from "ethers";
+import ABI from "./ABI.json";
+import { BrowserProvider, Contract, parseEther, formatEther, Interface } from "ethers";
 import { CONTRACT_ADDRESS } from "./constants";
 
 // Module-level variables to store provider, signer, and contract
