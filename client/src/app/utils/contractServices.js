@@ -1,4 +1,4 @@
-import Lock_ABI from "./Lock_ABI.json";
+import ABI from "./SignatureVerification.json";
 import { BrowserProvider, Contract, parseEther, formatEther } from "ethers";
 import { CONTRACT_ADDRESS } from "./constants";
 
@@ -12,7 +12,7 @@ const initialize = async () => {
   if (typeof window.ethereum !== "undefined") {
     provider = new BrowserProvider(window.ethereum);
     signer = await provider.getSigner();
-    contract = new Contract(CONTRACT_ADDRESS, Lock_ABI, signer);
+    contract = new Contract(CONTRACT_ADDRESS, ABI, signer);
   } else {
     console.error("Please install MetaMask!");
   }
