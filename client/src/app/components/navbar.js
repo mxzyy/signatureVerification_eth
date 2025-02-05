@@ -28,7 +28,7 @@ function Navbar() {
       {/* Button di pojok kanan */}
       <div className="flex-1 flex justify-end">
         {/* Dropdown Button */}
-        <button
+        {/* <button
           id="dropdownDefaultButton"
           onClick={toggleDropdown}
           data-dropdown-toggle="dropdown"
@@ -51,7 +51,7 @@ function Navbar() {
               d="m1 1 4 4 4-4"
             />
           </svg>
-        </button>
+        </button> */}
 
         {isDropdownOpen && (
           <div

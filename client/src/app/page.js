@@ -6,6 +6,7 @@ import Form from "./components/form";
 import Navbar from "./components/navbar";
 import React, { useState, useEffect } from "react";
 import { requestAccount } from "./utils/contractServices";
+import Result from "./components/result";
 
 export default function Home() {
   const [account, setAccount] = useState(null);
@@ -39,6 +40,7 @@ export default function Home() {
       <Navbar />
       <Account setAccount={setAccount} accountAddr={account}/>
       <Form />
+      <Result />
     </>
   );
 }
