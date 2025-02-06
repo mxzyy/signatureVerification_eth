@@ -1,11 +1,9 @@
 'use client'
 import { useState } from "react";
 
-
-function Form() {
+function Form({ setInputData, processData }) {
     const [message, setMessage] = useState('');
     const [hash, setHash]       = useState('');
-    
     const handleMessageChange = (event) => {
         setMessage(event.target.value); 
     };
@@ -14,13 +12,17 @@ function Form() {
     };
 
     const handleSubmit = (event) => {
-        event.preventDefault(); 
-        console.log('Message:', message); 
+        event.preventDefault();
+        setInputData(message);
+        processData(message);
     };
     const handleHashSubmit = (event) => {
         event.preventDefault();
-        console.log('Hash :', hash);
+        setInputData(hash);
+        processData(hash);
     };
+
+    
 
     return (
         <>
@@ -54,6 +56,7 @@ function Form() {
                         rows="6" // Menambah jumlah baris
                         className="block p-2 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 h-32" // Menambah tinggi
                         placeholder="Hash..."
+                        value={hash}
                         onChange={handleHashChange}
                     ></textarea>
                     <button
@@ -67,5 +70,13 @@ function Form() {
         </>
     )
 }
+
+export const getDataMessage = () => {
+    return message;
+};
+
+export const getDataHash = () => {
+    return hash;
+};
 
 export default Form;

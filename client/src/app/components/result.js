@@ -1,4 +1,13 @@
-function Result() {
+'use client'
+import { useState } from "react";
+import { getHashMessage } from "../utils/contractServices";
+
+function Result({ result }) {
+    const [message, setHashedMsg] = useState('');
+    const [pubkey, setPubkey] = useState('');
+    const hashed_message = getHashMessage(result);
+
+
     return (
         <>
             <div className="relative max-w-2xl mx-auto mt-24">
@@ -12,7 +21,7 @@ function Result() {
                     <div className="overflow-x-auto">
                         <pre id="code" className="text-gray-300">
                             <code>
-                                test
+                                {hashed_message}
                             </code>
 
                         </pre>

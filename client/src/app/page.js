@@ -2,14 +2,22 @@
 import Head from "next/head";
 import Image from "next/image";
 import Account from "./components/account";
-import Form from "./components/form";
+import Form, { getDataHash } from "./components/form";
 import Navbar from "./components/navbar";
 import React, { useState, useEffect } from "react";
-import { requestAccount } from "./utils/contractServices";
+import { getHashMessage, requestAccount } from "./utils/contractServices";
 import Result from "./components/result";
 
 export default function Home() {
   const [account, setAccount] = useState(null);
+  const [inputData, setInputData] = useState('');
+  const [result, setResult] = useState('');
+
+  const processData = (data) => {
+    const processedData = data;
+    setResult(processedData);
+  };
+
   useEffect(() => {
     const fetchCurAccount = async () => {
       const account = await requestAccount();
@@ -28,6 +36,9 @@ export default function Home() {
       window.ethereum?.removeListener("accountsChanged", handleAccountChanged);
     };
   });
+
+  
+
   return (
     <>
       <Head>
@@ -39,8 +50,8 @@ export default function Home() {
       </Head>
       <Navbar />
       <Account setAccount={setAccount} accountAddr={account}/>
-      <Form />
-      <Result />
+      <Form setInputData={setInputData} processData={processData} />
+      <Result result={result} />
     </>
   );
 }
