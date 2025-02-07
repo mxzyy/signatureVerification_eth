@@ -1,12 +1,7 @@
-'use client'
 import { useState } from "react";
 import { getHashMessage } from "../utils/contractServices";
 
 function Result({ result }) {
-    const [message, setHashedMsg] = useState('');
-    const [pubkey, setPubkey] = useState('');
-    const hashed_message = getHashMessage(result);
-
 
     return (
         <>
@@ -21,7 +16,7 @@ function Result({ result }) {
                     <div className="overflow-x-auto">
                         <pre id="code" className="text-gray-300">
                             <code>
-                                {hashed_message}
+                                {result}
                             </code>
 
                         </pre>

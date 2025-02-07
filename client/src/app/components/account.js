@@ -1,5 +1,4 @@
-'use client'
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { requestAccount } from "../utils/contractServices";
 function Account({ setAccount, accountAddr }) {
   const connectWallet = async () => {

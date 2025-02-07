@@ -1,7 +1,7 @@
 import ABI from "./ABI.json";
-import { BrowserProvider, Contract, parseEther, formatEther, Interface } from "ethers";
+import { Contract, ethers, BrowserProvider, Typed  } from "ethers";
 import { CONTRACT_ADDRESS } from "./constants";
-
+import web3 from 'web3';
 
 let provider;
 let signer;
@@ -9,14 +9,14 @@ let contract;
 let contract_call;
 
 const initialize = async () => {
-  await window.ethereum.enable();
-  if (typeof window.ethereum !== "undefined") {
+  //await window.ethereum.enable();
+  if (typeof window !== 'undefined' && typeof window.ethereum !== 'undefined') {
     provider = new BrowserProvider(window.ethereum);
     signer = await provider.getSigner();
     contract = new Contract(CONTRACT_ADDRESS, ABI, signer);
-    contract_call = new Contract(CONTRACT_ADDRESS, ABI, provider);
+    console.log(`ct : ${contract} `);
   } else {
-    console.error("Please install MetaMask!");
+    console.log("err");
   }
 };
 
@@ -27,20 +27,18 @@ export const requestAccount = async () => {
     const accounts = await provider.send("eth_requestAccounts", []);
     return accounts[0];
   } catch (error) {
-    console.error("Error requesting account:", error.message);
+    console.log("Error requesting account:", error.message);
     return null;
   }
 };
 
-export const getContractBalanceInETH = async () => {
-  const balanceWei = await provider.getBalance(CONTRACT_ADDRESS);
-  const balanceEth = formatEther(balanceWei);
-  return balanceEth;
-};
 
 export const getHashMessage = async (plaintext) => {
-  const hashed_message = await contract_call.getMessageHash(plaintext);
-  const parsed_hash = await contract_call.getEthSignedMessageHashV2(hashed_message);
-  const signed_message = await contract_call.signMessage(parsed_hash);
-  return signed_message;
+  console.log(`gethash : ${await contract}`);
+  //const hashed_message = await contract;
+  console.log(`hashed_message : ${hashed_message}`);
+  return plaintext;
+  // const parsed_hash = await contract.getEthSignedMessageHashV2(hashed_message);
+  // const signed_message = await contract.signMessage(parsed_hash);
+  // return signed_message;
 }

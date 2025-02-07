@@ -1,4 +1,4 @@
-'use client'
+"use client"
 import Head from "next/head";
 import Image from "next/image";
 import Account from "./components/account";
@@ -12,11 +12,21 @@ export default function Home() {
   const [account, setAccount] = useState(null);
   const [inputData, setInputData] = useState('');
   const [result, setResult] = useState('');
+  const [hash, setHash ] = useState('');
 
   const processData = (data) => {
     const processedData = data;
+    console.log(`proddata : ${data}`)
     setResult(processedData);
   };
+
+  useEffect(() => {
+    const getHash = async () => {
+      const hashed_message = await getHashMessage(result);
+      setHash(hashed_message);
+    };
+    getHash();
+  });
 
   useEffect(() => {
     const fetchCurAccount = async () => {
@@ -51,7 +61,7 @@ export default function Home() {
       <Navbar />
       <Account setAccount={setAccount} accountAddr={account}/>
       <Form setInputData={setInputData} processData={processData} />
-      <Result result={result} />
+      <Result result={hash} />
     </>
   );
 }
