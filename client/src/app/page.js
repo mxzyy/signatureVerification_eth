@@ -23,10 +23,12 @@ export default function Home() {
   useEffect(() => {
     const getHash = async () => {
       const hashed_message = await getHashMessage(result);
+      console.log(`has : ${hashed_message}`);
       setHash(hashed_message);
+      
     };
     getHash();
-  });
+  }, []);
 
   useEffect(() => {
     const fetchCurAccount = async () => {
