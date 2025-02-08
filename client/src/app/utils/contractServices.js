@@ -1,6 +1,7 @@
 import ABI from "./ABI.json";
 import { Contract, BrowserProvider, BaseContractMethod } from "ethers";
 import { CONTRACT_ADDRESS } from "./constants";
+import { sign } from "web3/lib/commonjs/eth.exports";
 
 let provider;
 let signer;
@@ -52,11 +53,10 @@ export const getHashMessage = async (plaintext) => {
   }
 
   try {
-    // Panggil fungsi getHashMessage di kontrak
-    const getHashMessageData = contract["getMessageHash(string)"];
-    const hashedMessage = await getHashMessageData(plaintext);
-    console.log(`Hashed message: ${hashedMessage}`);
-    return hashedMessage;
+    const getHashMessageData = await contract["getMessageHash(string)"](plaintext);
+    const parseMessageHash  = await contract["getEthSignedMessageHashV2(string)"](getHashMessageData);
+    signer.signMessage(parseMessageHash);
+    return parseMessageHash;
   } catch (error) {
     console.error("Error calling getHashMessage:", error);
     return null;
