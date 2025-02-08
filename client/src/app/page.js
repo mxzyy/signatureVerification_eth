@@ -27,6 +27,7 @@ export default function Home() {
           console.log("call fetchHash");
           const hash = await getHashMessage(result);
           console.log("🔹 Hashed message:", hash);
+          setHash(hash);
         } catch (error) {
           console.error("❌ Error:", error);
         }

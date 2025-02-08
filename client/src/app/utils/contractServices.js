@@ -21,6 +21,7 @@ const initialize = async () => {
       console.log(`Contract initialized: ${await contract.getAddress()}`);
       console.log("🔍 ABI:", ABI);
       console.log("🔍 Contract functions:", contract.interface.fragments.map(f => f.name));
+      console.log("🔍 Code :", contract.getDeployedCode());
 
       isInitialized = true; // Tandai bahwa kontrak sudah diinisialisasi
     } catch (error) {
