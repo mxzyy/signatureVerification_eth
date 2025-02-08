@@ -52,8 +52,8 @@ export const getHashMessage = async (plaintext) => {
 
   try {
     // Panggil fungsi getHashMessage di kontrak
-    const getHashMessage = contract["getHashMessage(string)"];
-    const hashedMessage = await getHashMessage(plaintext);
+    const getHashMessageData = contract["getMessageHash(string)"];
+    const hashedMessage = await getHashMessageData(plaintext);
     console.log(`Hashed message: ${hashedMessage}`);
     return hashedMessage;
   } catch (error) {

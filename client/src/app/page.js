@@ -21,14 +21,20 @@ export default function Home() {
   };
 
   useEffect(() => {
-    const getHash = async () => {
-      const hashed_message = await getHashMessage(result);
-      console.log(`has : ${hashed_message}`);
-      setHash(hashed_message);
-      
+    const fetchHash = async () => {
+      if (result) {  // Pastikan result tidak kosong sebelum diproses
+        try {
+          console.log("call fetchHash");
+          const hash = await getHashMessage(result);
+          console.log("🔹 Hashed message:", hash);
+        } catch (error) {
+          console.error("❌ Error:", error);
+        }
+      }
     };
-    getHash();
-  }, []);
+
+    fetchHash();
+  }, [result]);  
 
   useEffect(() => {
     const fetchCurAccount = async () => {
