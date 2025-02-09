@@ -18,7 +18,6 @@ function Result({ result }) {
                             <code>
                                 {result}
                             </code>
-
                         </pre>
                     </div>
                 </div>

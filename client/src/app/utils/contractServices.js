@@ -45,6 +45,17 @@ export const requestAccount = async () => {
   }
 };
 
+const handleSignMessage = async (message) => {
+  try {
+    const signature = await signer.signMessage(message);
+    console.log("Message signed successfully:", signature);
+    return signature;
+  } catch (error) {
+    console.error("Error:", error.message);
+    return null;
+  }
+};
+
 export const getHashMessage = async (plaintext) => {
   if (!isInitialized) {
     console.log("Contract is not initialized yet. Please wait...");
@@ -53,9 +64,14 @@ export const getHashMessage = async (plaintext) => {
 
   try {
     const getHashMessageData = await contract["getMessageHash(string)"](plaintext);
-    const parseMessageHash  = await contract["getEthSignedMessageHashV2(string)"](getHashMessageData);
-    signer.signMessage(parseMessageHash);
-    return parseMessageHash;
+    const parseMessageHash = await contract["getEthSignedMessageHashV2(string)"](getHashMessageData);
+    const getSignMessage = await handleSignMessage(parseMessageHash);
+    const data = {
+      parsedMsg: parseMessageHash,
+      signedMsg: getSignMessage,
+    };
+
+    return JSON.stringify(data, null, 2);
   } catch (error) {
     console.error("Error calling getHashMessage:", error);
     return null;
