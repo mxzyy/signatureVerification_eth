@@ -1,7 +1,6 @@
 import ABI from "./ABI.json";
 import { Contract, BrowserProvider, BaseContractMethod } from "ethers";
 import { CONTRACT_ADDRESS } from "./constants";
-import { sign } from "web3/lib/commonjs/eth.exports";
 
 let provider;
 let signer;

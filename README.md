@@ -9,9 +9,17 @@ Init Hardhat
 ```shell
 npx hardhat node
 npx hardhat test
-npx hardhat ignition deploy ignition/modules/deploy.js
+npx hardhat ignition deploy ignition/modules/deploy.js --network localhost
 
 ```
+
+Note : 
+```shell
+# If got BAD_DATA Exception
+rm -rf ignition/deployments
+
+```
+
 
 Running dApp
 ```shell
