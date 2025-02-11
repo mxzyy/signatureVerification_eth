@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { getHashMessage } from "../utils/contractServices";
 
-function Result({ result }) {
+function Result({ result, verifyResult }) {
 
     return (
         <>
@@ -17,6 +17,7 @@ function Result({ result }) {
                         <pre id="code" className="text-gray-300">
                             <code>
                                 {result}
+                                {verifyResult}
                             </code>
                         </pre>
                     </div>

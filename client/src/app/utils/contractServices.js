@@ -1,5 +1,5 @@
 import ABI from "./ABI.json";
-import { Contract, BrowserProvider, BaseContractMethod } from "ethers";
+import { Contract, BrowserProvider, Signature } from "ethers";
 import { CONTRACT_ADDRESS } from "./constants";
 
 let provider;
@@ -23,7 +23,7 @@ const initialize = async () => {
       console.log("🔍 Contract functions:", contract.interface.fragments.map(f => f.name));
       console.log("🔍 Code :", contract.getDeployedCode());
 
-      isInitialized = true; // Tandai bahwa kontrak sudah diinisialisasi
+      isInitialized = true;
     } catch (error) {
       console.error("Error initializing contract:", error);
     }
@@ -32,7 +32,6 @@ const initialize = async () => {
   }
 };
 
-// Panggil initialize untuk menginisialisasi kontrak
 initialize();
 
 export const requestAccount = async () => {
@@ -76,4 +75,23 @@ export const getHashMessage = async (plaintext) => {
     console.error("Error calling getHashMessage:", error);
     return null;
   }
+};
+
+export const verifySignature = async (parsedMsg, signedMsg) => {
+  if (!isInitialized) {
+    console.log("Contract is not initialized yet. Please wait...");
+    return null;
+  }
+
+  try {
+    const v = Signature.from(signedMsg).v;
+    const r = Signature.from(signedMsg).r;
+    const s = Signature.from(signedMsg).s;
+    const verify = await contract["verify(bytes32,uint8,bytes32,bytes32)"](parsedMsg, v, r, s);
+    return verify;
+  } catch (error) {
+    console.error("Error calling getHashMessage:", error);
+    return null;
+  }
+
 };

@@ -1,7 +1,7 @@
 'use client'
 import { useState } from "react";
 
-function Form({ setInputData, processData }) {
+function Form({ setInputData, processData, setInputHash, processHash }) {
     const [message, setMessage] = useState('');
     const [hash, setHash]       = useState('');
     const handleMessageChange = (event) => {
@@ -18,8 +18,8 @@ function Form({ setInputData, processData }) {
     };
     const handleHashSubmit = (event) => {
         event.preventDefault();
-        setInputData(hash);
-        processData(hash);
+        setInputHash(hash);
+        processHash(hash);
     };
 
     
@@ -49,13 +49,13 @@ function Form({ setInputData, processData }) {
 
                 <form className="px-10 w-96" onSubmit={handleHashSubmit}>
                     <label htmlFor="message" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                        Hash to verify Signature
+                        Hash to verify Signature (JSON Format)
                     </label>
                     <textarea
                         id="message"
                         rows="6" // Menambah jumlah baris
                         className="block p-2 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 h-32" // Menambah tinggi
-                        placeholder="Hash..."
+                        placeholder='{ "parsedMsg": 0x... , "signedMsg": 0x... }'
                         value={hash}
                         onChange={handleHashChange}
                     ></textarea>
