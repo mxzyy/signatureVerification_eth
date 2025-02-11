@@ -1,9 +1,10 @@
 import ABI from "./ABI.json";
-import { Contract, BrowserProvider, Signature } from "ethers";
+import { Contract, BrowserProvider, Signature, ethers } from "ethers";
 import { CONTRACT_ADDRESS } from "./constants";
 
 let provider;
 let signer;
+let signerV2;
 let contract;
 let isInitialized = false; // Flag untuk menandai apakah kontrak sudah diinisialisasi
 
@@ -13,6 +14,9 @@ const initialize = async () => {
       // Inisialisasi provider dan signer
       provider = new BrowserProvider(window.ethereum);
       signer = await provider.getSigner();
+      signerV2 = await provider.getSigner(signer.address);
+      
+      console.log("signerV2 : ",signerV2);
 
       // Buat instance contract
       const baseContract = new Contract(CONTRACT_ADDRESS, ABI, provider);
@@ -46,8 +50,10 @@ export const requestAccount = async () => {
 
 const handleSignMessage = async (message) => {
   try {
-    const signature = await signer.signMessage(message);
+    const signature = await signerV2.signMessage(message);
     console.log("Message signed successfully:", signature);
+    const verify = ethers.verifyMessage(message, signature);
+    console.log(verify);
     return signature;
   } catch (error) {
     console.error("Error:", error.message);
@@ -63,7 +69,9 @@ export const getHashMessage = async (plaintext) => {
 
   try {
     const getHashMessageData = await contract["getMessageHash(string)"](plaintext);
+    console.log("Hash v1 : ", getHashMessageData);
     const parseMessageHash = await contract["getEthSignedMessageHashV2(string)"](getHashMessageData);
+    console.log("Hash v2 : ", parseMessageHash);
     const getSignMessage = await handleSignMessage(parseMessageHash);
     const data = {
       parsedMsg: parseMessageHash,
@@ -85,8 +93,11 @@ export const verifySignature = async (parsedMsg, signedMsg) => {
 
   try {
     const v = Signature.from(signedMsg).v;
+    console.log("v :", v);
     const r = Signature.from(signedMsg).r;
+    console.log("r :", r);
     const s = Signature.from(signedMsg).s;
+    console.log("s :", s);
     const verify = await contract["verify(bytes32,uint8,bytes32,bytes32)"](parsedMsg, v, r, s);
     return verify;
   } catch (error) {

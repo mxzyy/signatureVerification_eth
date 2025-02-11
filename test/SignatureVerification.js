@@ -10,8 +10,9 @@ const { expect } = require("chai");
 describe("Signature Verification", function () {
     async function deployContract() {
         const provider = ethers.getDefaultProvider("http://localhost:8545/");
-        const privateKey = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
+        const privateKey = "3ab684ebe79ad0742622d091f20eded9869867660599537575e866f4624fc779";
         const signer = new ethers.Wallet(privateKey, provider);
+        console.log("signed :", signer);
         const SV_Contract = await ethers.getContractFactory("SignatureVerification", signer);
         const sv = await SV_Contract.deploy();
         const ca = await sv.getAddress();
@@ -55,10 +56,15 @@ describe("Signature Verification", function () {
             const message = "Testing";
             const solHash = await sv.getMessageHash(message);
             const parseHash = await sv.getEthSignedMessageHashV2(solHash);
+            console.log(typeof parseHash);
             const signedMsg = await signer.signMessage(solHash);
+            console.log("    Signed message : ", signedMsg);
             const v = ethers.Signature.from(signedMsg).v;
+            console.log("    v : ", v);
             const r = ethers.Signature.from(signedMsg).r;
+            console.log("    r : ", r);
             const s = ethers.Signature.from(signedMsg).s;
+            console.log("    s : ", s);
             const verify = await sv.verify(parseHash, v, r, s);
             const signerAddress = await signer.getAddress();
             console.log("    recover Actual  : ", verify);
