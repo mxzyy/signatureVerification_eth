@@ -47,14 +47,14 @@ export default function Home() {
     const fetchVerify = async () => {
       if (hashData) {
         try {
-          console.log("Call verify");
-          const parseHashData = JSON.parse(hashData);
-          const parsedMsg = parseHashData.parsedMsg;
-          const signedMsg = parseHashData.signedMsg;
-          console.log(`parsedMsg : ${parsedMsg}`);
-          console.log(`signedMsg : ${signedMsg}`);
-          const verifyResult = await verifySignature(parsedMsg, signedMsg);
-          setResultVerify(verifyResult);
+          console.log("hash Data : ", hashData);
+          // const parseHashData = JSON.parse(hashData);
+          // const parsedMsg = parseHashData.parsedMsg;
+          // const signedMsg = parseHashData.signedMsg;
+          // console.log(`parsedMsg : ${parsedMsg}`);
+          // console.log(`signedMsg : ${signedMsg}`);
+          // const verifyResult = await verifySignature(parsedMsg, signedMsg);
+          // dsetResultVerify(verifyResult);
         } catch (error) {
           console.error("❌ Error:", error);
         }

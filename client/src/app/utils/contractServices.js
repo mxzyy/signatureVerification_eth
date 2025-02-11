@@ -52,8 +52,8 @@ const handleSignMessage = async (message) => {
   try {
     const signature = await signerV2.signMessage(message);
     console.log("Message signed successfully:", signature);
-    const verify = ethers.verifyMessage(message, signature);
-    console.log(verify);
+    const wallet = new ethers.Wallet("3ab684ebe79ad0742622d091f20eded9869867660599537575e866f4624fc779"); 
+    console.log("signed privkey : ", await wallet.signMessage(message));
     return signature;
   } catch (error) {
     console.error("Error:", error.message);
@@ -92,17 +92,24 @@ export const verifySignature = async (parsedMsg, signedMsg) => {
   }
 
   try {
-    const v = Signature.from(signedMsg).v;
-    console.log("v :", v);
-    const r = Signature.from(signedMsg).r;
-    console.log("r :", r);
-    const s = Signature.from(signedMsg).s;
-    console.log("s :", s);
-    const verify = await contract["verify(bytes32,uint8,bytes32,bytes32)"](parsedMsg, v, r, s);
-    return verify;
+    ethers.verifyMessage(parsedMsg, signedMsg);
   } catch (error) {
     console.error("Error calling getHashMessage:", error);
     return null;
   }
+
+  // try {
+  //   const v = Signature.from(signedMsg).v;
+  //   console.log("v :", v);
+  //   const r = Signature.from(signedMsg).r;
+  //   console.log("r :", r);
+  //   const s = Signature.from(signedMsg).s;
+  //   console.log("s :", s);
+  //   const verify = await contract["verify(bytes32,uint8,bytes32,bytes32)"](parsedMsg, v, r, s);
+  //   return verify;
+  // } catch (error) {
+  //   console.error("Error calling getHashMessage:", error);
+  //   return null;
+  // }
 
 };
