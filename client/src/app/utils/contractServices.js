@@ -72,7 +72,7 @@ export const getHashMessage = async (plaintext) => {
     console.log("Hash v1 : ", getHashMessageData);
     const parseMessageHash = await contract["getEthSignedMessageHashV2(string)"](getHashMessageData);
     console.log("Hash v2 : ", parseMessageHash);
-    const getSignMessage = await handleSignMessage(parseMessageHash);
+    const getSignMessage = await handleSignMessage(getHashMessageData);
     const data = {
       parsedMsg: parseMessageHash,
       signedMsg: getSignMessage,
@@ -90,26 +90,19 @@ export const verifySignature = async (parsedMsg, signedMsg) => {
     console.log("Contract is not initialized yet. Please wait...");
     return null;
   }
-
+  
   try {
-    ethers.verifyMessage(parsedMsg, signedMsg);
+    const v = Signature.from(signedMsg).v;
+    console.log("v :", v);
+    const r = Signature.from(signedMsg).r;
+    console.log("r :", r);
+    const s = Signature.from(signedMsg).s;
+    console.log("s :", s);
+    const verify = await contract["verify(bytes32,uint8,bytes32,bytes32)"](parsedMsg, v, r, s);
+    return verify;
   } catch (error) {
     console.error("Error calling getHashMessage:", error);
     return null;
   }
-
-  // try {
-  //   const v = Signature.from(signedMsg).v;
-  //   console.log("v :", v);
-  //   const r = Signature.from(signedMsg).r;
-  //   console.log("r :", r);
-  //   const s = Signature.from(signedMsg).s;
-  //   console.log("s :", s);
-  //   const verify = await contract["verify(bytes32,uint8,bytes32,bytes32)"](parsedMsg, v, r, s);
-  //   return verify;
-  // } catch (error) {
-  //   console.error("Error calling getHashMessage:", error);
-  //   return null;
-  // }
 
 };

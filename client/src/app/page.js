@@ -48,13 +48,13 @@ export default function Home() {
       if (hashData) {
         try {
           console.log("hash Data : ", hashData);
-          // const parseHashData = JSON.parse(hashData);
-          // const parsedMsg = parseHashData.parsedMsg;
-          // const signedMsg = parseHashData.signedMsg;
-          // console.log(`parsedMsg : ${parsedMsg}`);
-          // console.log(`signedMsg : ${signedMsg}`);
-          // const verifyResult = await verifySignature(parsedMsg, signedMsg);
-          // dsetResultVerify(verifyResult);
+          const parseHashData = JSON.parse(hashData);
+          const parsedMsg = parseHashData.parsedMsg;
+          const signedMsg = parseHashData.signedMsg;
+          console.log(`parsedMsg : ${parsedMsg}`);
+          console.log(`signedMsg : ${signedMsg}`);
+          const verifyResult = await verifySignature(parsedMsg, signedMsg);
+          setResultVerify(verifyResult);
         } catch (error) {
           console.error("❌ Error:", error);
         }
