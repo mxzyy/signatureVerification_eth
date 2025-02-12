@@ -76,26 +76,6 @@ export default function Home() {
     fetchVerify();
   }, [resultV]);
 
-  // useEffect(() => {
-  //   const fetchVerify = async () = {
-  //     if (hashData) {
-  //       try {
-  //         console.log("Call verify");
-  //         const parseHashData = JSON.parse(hashData);
-  //         const parsedMsg = parseHashData.parsedMsg;
-  //         const signedMsg = parseHashData.signedMsg;
-  //         console.log(`parsedMsg : ${parsedMsg}`);
-  //         console.log(`signedMsg : ${signedMsg}`);
-  //         const verifyResult = await verifySignature(parsedMsg, signedMsg);
-  //       } catch (error) {
-  //         console.error("❌ Error:", error);
-  //       }
-  //     }
-  //   };
-
-  //   fetchVerify();
-  // }, []);
-
   useEffect(() => {
     const fetchCurAccount = async () => {
       const account = await requestAccount();
@@ -120,7 +100,6 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Signature Verification Tool's</title>
         <meta name="author" content="mxzyy" />
         <meta name="description" content="Test Client dApp" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />

@@ -1,5 +1,7 @@
 # Signature Verification
 
+
+
 This project is implemented from Ethereum Digital Signature Verification mechanism. Using the Keccak-256 Hash algorithm, Private-key signing verification, and many more! (Just personal project)
 
 Running the project:
@@ -17,6 +19,7 @@ Note :
 ```shell
 # If got BAD_DATA Exception
 rm -rf ignition/deployments
+npx hardhat ignition deploy ignition/modules/deploy.js --network localhost
 
 ```
 
@@ -36,6 +39,6 @@ Sauce :
 
 
 TODO : 
-- Web Design
-- Connect MetaMask
-- Deploy DevNet
+- Web Design ✅
+- Connect MetaMask ✅
+- Deploy DevNet 
