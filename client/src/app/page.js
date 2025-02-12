@@ -12,9 +12,15 @@ export default function Home() {
   const [account, setAccount] = useState(null);
   const [inputData, setInputData] = useState('');
   const [hashData, setInputHash] = useState('');
+
   const [result, setResult] = useState('');
+  const [resultV, setResultV] = useState('');
+
   const [hash, setHash] = useState('');
   const [resultverify, setResultVerify] = useState('');
+
+  const [isHash, setBoolHash] = useState(false);
+  const [isVerify, setBoolVerify] = useState(false);
 
   const processData = (data) => {
     const processedData = data;
@@ -23,8 +29,8 @@ export default function Home() {
   };
 
   const processHash = (hashdata) => {
-    console.log(`hashdata : ${hashdata}`);
-    setInputHash(hashdata);
+    console.log(`hashdata page : ${hashdata}`);
+    setResultV(hashdata);
   };
 
   useEffect(() => {
@@ -34,6 +40,7 @@ export default function Home() {
           console.log("call fetchHash");
           const hash = await getHashMessage(result);
           setHash(hash);
+          setBoolHash(true);
         } catch (error) {
           console.error("❌ Error:", error);
         }
@@ -45,23 +52,24 @@ export default function Home() {
 
   useEffect(() => {
     const fetchVerify = async () => {
-      if (hashData) {
+      if (resultV) {
         try {
-          console.log("hash Data : ", hashData);
-          const parseHashData = JSON.parse(hashData);
+          console.log("hash Data : ", resultV);
+          const parseHashData = JSON.parse(resultV);
           const parsedMsg = parseHashData.parsedMsg;
           const signedMsg = parseHashData.signedMsg;
           console.log(`parsedMsg : ${parsedMsg}`);
           console.log(`signedMsg : ${signedMsg}`);
           const verifyResult = await verifySignature(parsedMsg, signedMsg);
           setResultVerify(verifyResult);
+          setBoolVerify(true);
         } catch (error) {
           console.error("❌ Error:", error);
         }
       }
     };
     fetchVerify();
-  }, [hashData]);
+  }, [resultV]);
 
   // useEffect(() => {
   //   const fetchVerify = async () = {
@@ -116,7 +124,7 @@ export default function Home() {
       <Navbar />
       <Account setAccount={setAccount} accountAddr={account} />
       <Form setInputData={setInputData} processData={processData} setInputHash={setInputHash} processHash={processHash} />
-      <Result result={hash} verifyResult={resultverify} />
+      <Result result={isHash ? hash : ""} verifyResult={isVerify ?resultverify : ""} />
     </>
   );
 }

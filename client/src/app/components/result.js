@@ -1,7 +1,20 @@
-import { useState } from "react";
-import { getHashMessage } from "../utils/contractServices";
+import ClipboardJS from "clipboard";
+import { useEffect, useRef } from "react";
 
 function Result({ result, verifyResult }) {
+    const codeRef = useRef(null);
+    useEffect(() => {
+        const clipboard = new ClipboardJS('.code', {
+            text: () => codeRef.current.innerText, 
+        });
+
+        clipboard.on('success', function (e) {
+            alert('Text copied to clipboard!');
+            e.clearSelection();
+        });
+
+        return () => clipboard.destroy();
+    }, []);
 
     return (
         <>
@@ -15,9 +28,8 @@ function Result({ result, verifyResult }) {
                     </div>
                     <div className="overflow-x-auto">
                         <pre id="code" className="text-gray-300">
-                            <code>
-                                {result}
-                                {verifyResult}
+                            <code ref={codeRef}>
+                                {result || verifyResult}
                             </code>
                         </pre>
                     </div>
