@@ -41,6 +41,8 @@ export default function Home() {
           const hash = await getHashMessage(result);
           setHash(hash);
           setBoolHash(true);
+          setBoolVerify(false);
+          setResult('');
         } catch (error) {
           console.error("❌ Error:", error);
         }
@@ -63,11 +65,14 @@ export default function Home() {
           const verifyResult = await verifySignature(parsedMsg, signedMsg);
           setResultVerify(verifyResult);
           setBoolVerify(true);
+          setBoolHash(false);
+          setResultV('');
         } catch (error) {
           console.error("❌ Error:", error);
         }
       }
     };
+
     fetchVerify();
   }, [resultV]);
 
